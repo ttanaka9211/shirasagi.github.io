@@ -102,18 +102,63 @@ gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
 > /sbin/service mongod start <br />
 > /sbin/chkconfig mongod on <br />
 
-## Ruby(RVM) のインストール
+## asdf のインストール
 
-~~~
-# \curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
-# \curl -sSL https://rvm.io/mpapis.asc | gpg --import -
-# \curl -sSL https://get.rvm.io | sudo bash -s stable
-# source /etc/profile
-# rvm install 2.6.3 --disable-binary
-# rvm use 2.6.3 --default
-# gem install bundler
-~~~
-
+1. 必要パッケージインストール
+    
+    ```
+    # dnf -y install openssl-devel
+    ```
+    
+2. GitHubからasdfのクローン
+    
+    ```
+    # git clone https://github.com/asdf-vm/asdf.git /usr/local/asdf
+    ```
+    
+3. 環境変数の設定
+    
+    ```
+    # vim /etc/profile.d/asdf.sh
+    ---
+    export ASDF_DIR=/usr/local/asdf
+    export ASDF_DATA_DIR=$ASDF_DIR
+    
+    ASDF_BIN="${ASDF_DIR}/bin"
+    ASDF_USER_SHIMS="${ASDF_DATA_DIR}/shims"
+    PATH="${ASDF_BIN}:${ASDF_USER_SHIMS}:${PATH}"
+    
+    . "${ASDF_DIR}/lib/asdf.sh"
+    . "${ASDF_DIR}/completions/asdf.bash"
+    ---
+    # source /etc/profile.d/asdf.sh
+    ```
+    
+4. rubyのインストール（3.0.4)
+    1. プラグインインストール
+        
+        ```
+        # asdf plugin add ruby
+        ```
+        
+    2. rubyインストール
+        
+        ```
+        # asdf install ruby 3.0.4
+        ```
+        
+    3. バージョンの指定
+        1. グローバル
+            
+            ```jsx
+            # asdf global ruby 3.0.4
+            ```
+            
+        2. ローカル(特定のディレクトリ内で作業）
+            
+            ```jsx
+            # asdf local ruby 3.0.4
+            ```
 ## ダウンロード
 
 ### SHIRASAGI
